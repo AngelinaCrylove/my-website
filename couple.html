@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>💞 Проверить Совместимость</title>
+  <style>
+    /* === СТИЛИ ИЗ style.txt === */
+    body {
+      font-family: 'Raleway', sansи-serif;
+      background: #faf3f0;
+      color: #5a4a5d;
+      text-align: center;
+      padding: 30px;
+      margin: 0;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      color: #bc3f73;
+    }
+    .input-section {
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff9f7;
+      border-radius: 15px;
+      max-width: 500px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+    .input-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    select {
+      padding: 12px;
+      margin: 8px;
+      border: 2px solid #e0c9d8;
+      border-radius: 12px;
+      background: white;
+      font-size: 16px;
+      text-align: center;
+      width: 120px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    select:hover {
+      border-color: #8b5a7d;
+      transform: scale(1.03);
+    }
+    .btn-base {
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      margin: 30px 0 50px;
+      transition: all 0.3s ease;
+      width: 340px;
+      box-sizing: border-box;
+      display: inline-block;
+    }
+    .btn-couple { background: #bc3f73; color: white; }
+    .btn-couple:hover {
+      background: #9a2d5a;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(188, 63, 115, 0.4);
+    }
+    #result {
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .card-container {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .card-container:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    .mystic-loader {
+      font-family: 'Playfair Display', serif;
+      color: #8b5a7d;
+      font-size: 16px;
+      position: relative;
+      padding-left: 24px;
+    }
+    .mystic-loader::before {
+      content: "🔮";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: pulseGlow 1.5s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.6; transform: translateY(-50%) scale(1); }
+      100% { opacity: 1; transform: translateY(-50%) scale(1.1); text-shadow: 0 0 8px rgba(139, 90, 125, 0.6); }
+    }
+    @media (max-width: 420px) {
+      .btn-base {
+        width: 90%;
+        padding: 14px 20px;
+        font-size: 17px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h2>Укажи даты рождения</h2>
+  <div class="input-section">
+    <select id="day1"><option value="">День</option></select>
+    <select id="month1"><option value="">Месяц</option></select>
+    <select id="year1"><option value="">Год</option></select>
+</div>
+  <div class="input-section">
+    <select id="day2"><option value="">День</option></select>
+    <select id="month2"><option value="">Месяц</option></select>
+    <select id="year2"><option value="">Год</option></select>  </div>
+  <button id="generateCoupleBtn" class="btn-base btn-couple" onclick="generateCoupleCards()">✨ Соединить Энергии ✨</button>
+  <div id="result"></div>
+
+  <script src="const.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

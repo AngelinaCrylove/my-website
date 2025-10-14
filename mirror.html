@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>🔮 Узнать зеркальную пару</title>
+  <style>
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: #faf3f0;
+      color: #5a4a5d;
+      text-align: center;
+      padding: 30px;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      color: #5a9bd5; 
+    }
+    .btn-base {
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      margin: 30px 0 50px;
+      transition: all 0.3s ease;
+      width: 400px;
+      box-sizing: border-box;
+      display: inline-block;
+      color: white;
+      text-align: center;
+    }
+    .btn-mirror {
+      background: #5a9bd5;
+      color: white;
+    }
+    .btn-mirror:hover {
+      background: #3a7db0;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(90, 155, 213, 0.4);
+    }
+    #result {
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .card-container {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      min-height: 220px;
+      backface-visibility: hidden;
+    }
+    .card-container:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+    .card-box {
+      text-align: center;
+      padding: 20px;
+      width: 220px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-box.stage { background: #f0f9ff; }
+    .card-box.mirror { background: rgb(44, 51, 104); color: white; }
+    .card-box h4 {
+      margin: 0;
+      color: #5a4a5d;
+      font-size: 16px;
+    }
+    .card-box.mirror h4 {
+      color: #e0d6eb;
+    }
+    .card-box img {
+      width: 100%;
+      max-width: 150px;
+      border-radius: 8px;
+    }
+    .card-box p {
+      margin: 0;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .card-box.mirror p {
+      color: white;
+    }
+    .mirror-placeholder {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+    @media (max-width: 420px) {
+      .btn-base {
+        width: 90%;
+        padding: 14px 20px;
+        font-size: 17px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h2>Нажми — и увидишь, какой аркан ведёт тебя сейчас… и кто смотрит из зеркала.</h2>
+  <button id="showStageBtn" class="btn-base btn-mirror">🧭 Текущий Этап Жизни 🧭</button>
+  <div id="result"></div>
+
+  <script src="const.js"></script>
+  <script>
+    
+    // === ГЕНЕРАЦИЯ СОВЕТА ===
+    function generateAdvice(stageIndex, mirrorIndex, advisorIndex) {
+      const stage = arcanaRoles[stageIndex];
+      const mirror = arcanaRoles[mirrorIndex];
+      const advisor = arcanaRoles[advisorIndex];
+
+      let type = 'cycle'; // fallback
+      for (const [key, list] of Object.entries(advisorTypeMap)) {
+        if (list.includes(advisorIndex)) {
+          type = key;
+          break;
+        }
+      }
+
+      const template = adviceTemplates[type] || adviceTemplates.cycle;
+      return template(advisor, stage, mirror);
+    }
+
+    let stageIndex = null;
+    let mirrorIndex = null;
+    let adviceShown = false;
+
+    function smoothScrollToElement(element, offsetRatio = 0.1) {
+      if (!element) return;
+      const elementTop = element.getBoundingClientRect().top + window.scrollY;
+      const offset = window.innerHeight * offsetRatio;
+      window.scrollTo({ top: elementTop - offset, behavior: "smooth" });
+    }
+
+// === ФУНКЦИЯ ГЕНЕРАЦИИ СОВЕТА ===
+function generateAdvice(stageIndex, mirrorIndex, advisorIndex) {
+  const stage = arcanaRoles[stageIndex];
+  const mirror = arcanaRoles[mirrorIndex];
+  const advisor = arcanaRoles[advisorIndex];
+
+  let type = 'cycle'; // fallback
+  for (const [key, list] of Object.entries(advisorTypeMap)) {
+    if (list.includes(advisorIndex)) {
+      type = key;
+      break;
+    }
+  }
+
+  const template = adviceTemplates[type] || adviceTemplates.cycle;
+  return template(advisor, stage, mirror);
+}
+    function showStageAndMirror() {
+      stageIndex = Math.floor(Math.random() * 22);
+      mirrorIndex = 21 - stageIndex;
+      const stageCard = arcana[stageIndex];
+      const mirrorCard = arcana[mirrorIndex];
+      let html = `
+        <div id="stage-card" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 30px 0;">
+          <div class="card-container">
+            <div class="card-box stage">
+              <h4>Этап жизни</h4>
+              <img src="${stageCard.image}" alt="${stageCard.name}">
+              <p>${stageCard.name}</p>
+            </div>
+          </div>
+          <div class="card-container">
+            <div class="card-box mirror">
+              <div class="mirror-placeholder">
+                <img src="mirror.gif" alt="Зеркало раскрывается" style="width: 100%; max-width: 150px; border-radius: 8px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = html;
+      resultDiv.style.opacity = "1";
+      smoothScrollToElement(document.getElementById("stage-card"), 0.1);
+      setTimeout(() => {
+        const mirrorBox = document.querySelector('.card-box.mirror');
+        mirrorBox.innerHTML = `
+          <h4>Зеркало</h4>
+          <img src="${mirrorCard.image}" alt="${mirrorCard.name}">
+          <p>${mirrorCard.name}</p>
+        `;
+        const pairKey = `${stageIndex}-${mirrorIndex}`;
+        const description = doublet[pairKey] || "Описание для этой пары ещё не готово.";
+        let explanation = `
+          <div style="background: #f8fdfa; padding: 25px; border-radius: 12px; margin: 40px 0; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+            <h3>📖 Что это значит?</h3>
+            <p>${description}</p>
+          </div>
+        `;
+        explanation += `<div style="text-align: center; margin: 30px 0;">
+          <button id="adviceBtn" class="btn-base btn-mirror">❓ Получить совет</button>
+        </div>`;
+        resultDiv.innerHTML += explanation;
+        setTimeout(() => {
+          smoothScrollToElement(document.querySelector("#stage-card"), 0.05);
+        }, 300);
+        document.getElementById("adviceBtn").addEventListener("click", showAdvice);
+      }, 1000);
+    }
+
+function showAdvice() {
+  let adviceIndex;
+  do {
+    adviceIndex = Math.floor(Math.random() * 22);
+  } while (adviceIndex === stageIndex || adviceIndex === mirrorIndex);
+
+  const adviceCard = arcana[adviceIndex];
+  const cleanAdvice = generateAdvice(stageIndex, mirrorIndex, adviceIndex); // только совет!
+
+  const adviceHtml = `
+    <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 40px auto; max-width: 800px; background: #fff8e1; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      <div class="card-box" style="background: #fff8e1; color: #5a4a5d; width: 220px; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px;">
+        <h4>Совет</h4>
+        <img src="${adviceCard.image}" alt="${adviceCard.name}" style="width: 100%; max-width: 150px; border-radius: 8px;">
+        <p>${adviceCard.name}</p>
+      </div>
+      <div style="flex: 1; min-width: 250px; display: flex; flex-direction: column; justify-content: center; text-align: left; padding: 0 10px;">
+        <p style="white-space: pre-line; line-height: 1.7; font-size: 16px;">${cleanAdvice}</p>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("result").innerHTML += adviceHtml;
+  document.getElementById("adviceBtn").style.display = "none";
+  setTimeout(() => {
+    smoothScrollToElement(document.querySelector("#result > div:last-child"), 0.1);
+  }, 150);
+  adviceShown = true;
+}
+
+    document.getElementById("showStageBtn").addEventListener("click", showStageAndMirror);
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (!stageIndex) {
+          showStageAndMirror();
+        } else if (!adviceShown) {
+          showAdvice();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ТАРОЧАГ</title>
+  <style>
+    /* === СТИЛИ ИЗ style.txt (адаптированы под index) === */
+    body {
+      font-family: 'Raleway', sans-serif;
+      background: #faf3f0;
+      color: #5a4a5d;
+      text-align: center;
+      padding: 60px 30px 30px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+h1, h2 {
+  font-family: 'Cinzel', serif;
+}
+
+h1 {
+  font-size: 2.8rem;
+  background: linear-gradient(45deg, #e6b37a, #d49e6a, #b58a5f, #a67c52, #c49a6c);
+  background-size: 500% 500%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  position: relative;
+  /* Гарантируем, что градиент виден сразу */
+  background-position: 0% 50%;
+  animation: flameGlow 9s ease infinite;
+}
+
+h1::before { content: "✦ "; }
+h1::after  { content: " ✦"; }
+
+h2 {
+  /* Градиент чуть мягче, но всё равно тёплый */
+  background: linear-gradient(45deg, #d49e6a, #b58a5f, #a67c52);
+  background-size: 500% 500%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 40px;
+  font-size: 1.6rem;
+  max-width: 600px;
+  letter-spacing: 1px;
+  font-weight: 700; /* ← менее жирный! */
+  line-height: 1.4;
+  background-position: 0% 50%; /* ← сразу виден градиент */
+  animation: flameGlow 9s ease infinite;
+  
+}
+
+
+/* Анимация переливания — начинается с насыщенного оттенка */
+@keyframes flameGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* === УНИВЕРСАЛЬНЫЙ СТИЛЬ КНОПОК === */
+    .btn-base {
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      cursor: pointer;
+      margin: 0; /* убираем margin, чтобы gap контролировал расстояние */
+      transition: all 0.3s ease;
+      width: 420px; /* ← ТОЧНО 400px, как просили */
+      box-sizing: border-box;
+      display: inline-block;
+      text-decoration: none;
+      color: white;
+      text-align: center;
+    }
+
+    /* Цвета */
+    .btn-single { background: #8b5a7d; }
+    .btn-single:hover {
+      background: #704264;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(139, 90, 125, 0.3);
+    }
+
+    .btn-couple { background: #bc3f73; }
+    .btn-couple:hover {
+      background: #9a2d5a;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(188, 63, 115, 0.4);
+    }
+
+    .btn-mirror { background: #5a9bd5; }
+    .btn-mirror:hover {
+      background: #3a7db0;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(90, 155, 213, 0.4);
+    }
+
+    .btn-cross { background: #d4a017; }
+    .btn-cross:hover {
+      background: #b0850f;
+     transform: translateY(-3px);
+     box-shadow: 0 5px 15px rgba(212, 160, 23, 0.4);
+    }
+
+    /* Адаптив */
+    @media (max-width: 420px) {
+      .btn-base {
+        width: 90%;
+        padding: 14px 20px;
+        font-size: 17px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Добро пожаловать в Тарочаг</h1>
+  <h2>Погрейся у огня личного таинства</h2>
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: 500px;">
+    <a href="single.html" class="btn-base btn-single">🔮 Узнать Свои Сигнификаторы 🔮</a>
+    <a href="couple.html" class="btn-base btn-couple">💞 Проверить Совместимость 💞</a>
+    <a href="mirror.html" class="btn-base btn-mirror">🌊 Узнать зеркальную пару 🌊</a>
+    <a href="cross.html" class="btn-base btn-cross">📜 Сделать расклад 📜</a>
+  </div>
+</body>
+</html>
