@@ -151,22 +151,39 @@
       padding: 5px 5px 20px 5px;
     }
 
-    @media (max-width: 900px) {
-      .layout-container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .plus-layout {
-        top: 0;
-        right: 0;
-      }
-      .card-box[data-pos="3"],
-      .card-box[data-pos="1"],
-      .card-box[data-pos="4"],
-      .card-box[data-pos="6"] {
-        left: 0;
-      }
-    }
+/* Адаптив и сдвиг креста */
+@media (min-width: 901px) {
+  /* Десктоп: сдвиг креста вправо */
+  .plus-layout {
+    right: 150px; /* было 200px → сдвиг вправо на 50px */
+  }
+  .card-box[data-pos="3"],
+  .card-box[data-pos="1"],
+  .card-box[data-pos="4"] {
+    left: 0; /* было 50px → сдвиг влево на 50px */
+  }
+  .card-box[data-pos="6"] {
+    left: 50px; /* было 100px → сдвиг влево на 50px */
+  }
+}
+
+@media (max-width: 900px) {
+  /* Мобильные и планшеты: вертикальная компоновка без смещений */
+  .layout-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .plus-layout {
+    top: 0;
+    right: 0;
+  }
+  .card-box[data-pos="3"],
+  .card-box[data-pos="1"],
+  .card-box[data-pos="4"],
+  .card-box[data-pos="6"] {
+    left: 0;
+  }
+}
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400&display=swap" rel="stylesheet">
 </head>
