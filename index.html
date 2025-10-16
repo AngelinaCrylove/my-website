@@ -116,6 +116,24 @@ h2 {
      transform: translateY(-3px);
      box-shadow: 0 5px 15px rgba(212, 160, 23, 0.4);
     }
+    /* Эмодзи только на десктопе (≥481px) */
+@media (min-width: 481px) {
+  .btn-single::before,
+  .btn-single::after { content: "🔮"; }
+  .btn-couple::before,
+  .btn-couple::after { content: "💞"; }
+  .btn-mirror::before,
+  .btn-mirror::after { content: "🌊"; }
+  .btn-cross::before,
+  .btn-cross::after { content: "📜"; }
+
+  .btn-single::before, .btn-single::after,
+  .btn-couple::before, .btn-couple::after,
+  .btn-mirror::before, .btn-mirror::after,
+  .btn-cross::before, .btn-cross::after {
+    margin: 0 8px;
+  }
+}
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -123,11 +141,10 @@ h2 {
   <h1>Добро пожаловать в Тарочаг</h1>
   <h2>Погрейся у огня личного таинства</h2>
   <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; max-width: 500px;">
-    <a href="single.html" class="btn-base btn-single">🔮 Узнать Свои Сигнификаторы 🔮</a>
-    <a href="couple.html" class="btn-base btn-couple">💞 Проверить Совместимость 💞</a>
-    <a href="mirror.html" class="btn-base btn-mirror">🌊 Узнать зеркальную пару 🌊</a>
-    <a href="cross.html" class="btn-base btn-cross">📜 Сделать расклад 📜</a>
-    <a href="cross.html" class="btn-base btn-cross">📜 ваппиавмырол 📜</a>    
+<a href="single.html" class="btn-base btn-single">Узнать Свои Сигнификаторы</a>
+<a href="couple.html" class="btn-base btn-couple">Проверить Совместимость</a>
+<a href="mirror.html" class="btn-base btn-mirror">Узнать зеркальную пару</a>
+<a href="cross.html" class="btn-base btn-cross">Сделать расклад</a>
   </div>
 </body>
 </html>
