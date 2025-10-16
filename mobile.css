@@ -1,0 +1,72 @@
+/* mobile.css — универсальный адаптив для всех страниц */
+@media (max-width: 480px) {
+  /* Основной контент: заголовки, описания, результаты */
+  h1, h2, h3,
+  .input-section,
+  #result,
+  .card-container,
+  .layout-container,
+  .card-box,
+  body > div:not([style*="flex-direction: column"]) {
+    width: 80% !important;
+    max-width: 80% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Кнопки */
+  .btn-base {
+    width: 80% !important;
+    padding: 14px 20px;
+    font-size: 16px;
+    white-space: nowrap;
+    min-width: 220px;
+    box-sizing: border-box;
+  }
+
+  /* Выпадающие списки (день/месяц/год) */
+  select {
+    width: calc(30% - 8px) !important; /* три поля в ряд с отступами */
+    font-size: 15px !important;
+    padding: 10px !important;
+    margin: 4px !important;
+  }
+
+  /* Обёртка для полей ввода — центрируем и ограничиваем */
+  .input-section {
+    padding: 20px !important;
+    font-size: 15px !important;
+  }
+
+  /* Заголовки — чуть меньше */
+  h1 {
+    font-size: 2rem !important;
+    letter-spacing: 1px !important;
+  }
+  h2 {
+    font-size: 1.35rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Расклад Кельтский крест — карточки */
+  .card-box {
+    width: 140px !important;
+    min-height: 160px !important;
+    padding: 5px !important;
+  }
+  .card-box[data-pos="1"] {
+    width: 180px !important;
+  }
+
+  /* Убираем фиксированные позиции в cross.html на мобилке */
+  .plus-layout {
+    top: 0 !important;
+    right: 0 !important;
+  }
+  .card-box[data-pos="3"],
+  .card-box[data-pos="1"],
+  .card-box[data-pos="4"],
+  .card-box[data-pos="6"] {
+    left: 0 !important;
+  }
+}
