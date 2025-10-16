@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Случайные Карты Таро</title>
+  <title>Три Случайные Карты Таро</title>
   <style>
     body {
       font-family: 'Raleway', sans-serif;
       background: #faf3f0;
       color: #4a655a;
       text-align: center;
-      padding: 30px;
+      padding: 24px 16px;
       margin: 0;
       min-height: 100vh;
+      box-sizing: border-box;
     }
     h2 {
       font-family: 'Playfair Display', serif;
       color: #3d6b54;
-      margin-bottom: 30px;
+      margin: 20px 0 28px;
+      font-size: 28px;
     }
     .btn-base {
       border: none;
@@ -27,7 +29,7 @@
       font-weight: 600;
       font-family: 'Playfair Display', serif;
       cursor: pointer;
-      margin: 20px 0 40px;
+      margin: 20px 0 32px;
       transition: all 0.3s ease;
       width: 90%;
       max-width: 340px;
@@ -45,12 +47,13 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 24px;
+      gap: 20px;
       margin-top: 20px;
     }
     .card-item {
       text-align: center;
-      max-width: 180px;
+      max-width: 160px;
+      flex: 1 1 140px;
     }
     .card-item img {
       width: 100%;
@@ -64,6 +67,7 @@
       font-weight: 600;
       color: #3d6b54;
       font-family: 'Playfair Display', serif;
+      line-height: 1.3;
     }
     @media (max-width: 420px) {
       .btn-base {
@@ -72,29 +76,123 @@
         font-size: 16px;
       }
       .card-item {
-        max-width: 150px;
+        max-width: 140px;
       }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h2>Случайные карты Таро</h2>
-  <button class="btn-base" onclick="generateRandomCards()">Раскрыть карты</button>
+  <h2>Три Случайные Карты Таро</h2>
+  <button id="drawButton" class="btn-base">Раскрыть карты</button>
   <div id="result" class="cards-container"></div>
 
-  <!-- Правильное подключение JS-файла -->
-  <script src="const.js"></script>
   <script>
+    // === ДАННЫЕ ТАРО (все 78 карт, включая недостающие Мечи) ===
+    const Celtic_Cross = {
+      fool: { name: "Шут", image: "images/fool.png" },
+      magician: { name: "Маг", image: "images/magician.png" },
+      highpriestess: { name: "Жрица", image: "images/highpriestess.png" },
+      empress: { name: "Императрица", image: "images/empress.png" },
+      emperor: { name: "Император", image: "images/emperor.png" },
+      hierophant: { name: "Жрец", image: "images/hierophant.png" },
+      lovers: { name: "Влюблённые", image: "images/lovers.png" },
+      chariot: { name: "Колесница", image: "images/chariot.png" },
+      strength: { name: "Сила", image: "images/strength.png" },
+      hermit: { name: "Отшельник", image: "images/hermit.png" },
+      wheeloffortune: { name: "Колесо Фортуны", image: "images/wheeloffortune.png" },
+      justice: { name: "Справедливость", image: "images/justice.png" },
+      hangedman: { name: "Повешенный", image: "images/hangedman.png" },
+      death: { name: "Смерть", image: "images/death.png" },
+      temperance: { name: "Умеренность", image: "images/temperance.png" },
+      devil: { name: "Дьявол", image: "images/devil.png" },
+      tower: { name: "Башня", image: "images/tower.png" },
+      star: { name: "Звезда", image: "images/star.png" },
+      moon: { name: "Луна", image: "images/moon.png" },
+      sun: { name: "Солнце", image: "images/sun.png" },
+      judgement: { name: "Суд", image: "images/judgement.png" },
+      world: { name: "Мир", image: "images/world.png" },
+      aceofcups: { name: "Туз Кубков", image: "images/aceofcups.png" },
+      twoofcups: { name: "Двойка Кубков", image: "images/twoofcups.png" },
+      threeofcups: { name: "Тройка Кубков", image: "images/threeofcups.png" },
+      fourofcups: { name: "Четвёрка Кубков", image: "images/fourofcups.png" },
+      fiveofcups: { name: "Пятерка Кубков", image: "images/fiveofcups.png" },
+      sixofcups: { name: "Шестёрка Кубков", image: "images/sixofcups.png" },
+      sevenofcups: { name: "Семёрка Кубков", image: "images/sevenofcups.png" },
+      eightofcups: { name: "Восьмёрка Кубков", image: "images/eightofcups.png" },
+      nineofcups: { name: "Девятка Кубков", image: "images/nineofcups.png" },
+      tenofcups: { name: "Десятка Кубков", image: "images/tenofcups.png" },
+      pageofcups: { name: "Паж Кубков", image: "images/pageofcups.png" },
+      knightofcups: { name: "Рыцарь Кубков", image: "images/knightofcups.png" },
+      queenofcups: { name: "Королева Кубков", image: "images/queenofcups.png" },
+      kingofcups: { name: "Король Кубков", image: "images/kingofcups.png" },
+      aceofpentacles: { name: "Туз Пентаклей", image: "images/aceofpentacles.png" },
+      twoofpentacles: { name: "Двойка Пентаклей", image: "images/twoofpentacles.png" },
+      threeofpentacles: { name: "Тройка Пентаклей", image: "images/threeofpentacles.png" },
+      fourofpentacles: { name: "Четвёрка Пентаклей", image: "images/fourofpentacles.png" },
+      fiveofpentacles: { name: "Пятерка Пентаклей", image: "images/fiveofpentacles.png" },
+      sixofpentacles: { name: "Шестёрка Пентаклей", image: "images/sixofpentacles.png" },
+      sevenofpentacles: { name: "Семёрка Пентаклей", image: "images/sevenofpentacles.png" },
+      eightofpentacles: { name: "Восьмёрка Пентаклей", image: "images/eightofpentacles.png" },
+      nineofpentacles: { name: "Девятка Пентаклей", image: "images/nineofpentacles.png" },
+      tenofpentacles: { name: "Десятка Пентаклей", image: "images/tenofpentacles.png" },
+      pageofpentacles: { name: "Паж Пентаклей", image: "images/pageofpentacles.png" },
+      knightofpentacles: { name: "Рыцарь Пентаклей", image: "images/knightofpentacles.png" },
+      queenofpentacles: { name: "Королева Пентаклей", image: "images/queenofpentacles.png" },
+      kingofpentacles: { name: "Король Пентаклей", image: "images/kingofpentacles.png" },
+      aceofwands: { name: "Туз Жезлов", image: "images/aceofwands.png" },
+      twoofwands: { name: "Двойка Жезлов", image: "images/twoofwands.png" },
+      threeofwands: { name: "Тройка Жезлов", image: "images/threeofwands.png" },
+      fourofwands: { name: "Четвёрка Жезлов", image: "images/fourofwands.png" },
+      fiveofwands: { name: "Пятерка Жезлов", image: "images/fiveofwands.png" },
+      sixofwands: { name: "Шестёрка Жезлов", image: "images/sixofwands.png" },
+      sevenofwands: { name: "Семёрка Жезлов", image: "images/sevenofwands.png" },
+      eightofwands: { name: "Восьмёрка Жезлов", image: "images/eightofwands.png" },
+      nineofwands: { name: "Девятка Жезлов", image: "images/nineofwands.png" },
+      tenofwands: { name: "Десятка Жезлов", image: "images/tenofwands.png" },
+      pageofwands: { name: "Паж Жезлов", image: "images/pageofwands.png" },
+      knightofwands: { name: "Рыцарь Жезлов", image: "images/knightofwands.png" },
+      queenofwands: { name: "Королева Жезлов", image: "images/queenofwands.png" },
+      kingofwands: { name: "Король Жезлов", image: "images/kingofwands.png" },
+      aceofswords: { name: "Туз Мечей", image: "images/aceofswords.png" },
+      twoofswords: { name: "Двойка Мечей", image: "images/twoofswords.png" },
+      threeofswords: { name: "Тройка Мечей", image: "images/threeofswords.png" },
+      fourofswords: { name: "Четвёрка Мечей", image: "images/fourofswords.png" },
+      fiveofswords: { name: "Пятерка Мечей", image: "images/fiveofswords.png" },
+      sixofswords: { name: "Шестёрка Мечей", image: "images/sixofswords.png" },
+      sevenofswords: { name: "Семёрка Мечей", image: "images/sevenofswords.png" },
+      eightofswords: { name: "Восьмёрка Мечей", image: "images/eightofswords.png" },
+      nineofswords: { name: "Девятка Мечей", image: "images/nineofswords.png" },
+      tenofswords: { name: "Десятка Мечей", image: "images/tenofswords.png" },
+      pageofswords: { name: "Паж Мечей", image: "images/pageofswords.png" },
+      knightofswords: { name: "Рыцарь Мечей", image: "images/knightofswords.png" },
+      queenofswords: { name: "Королева Мечей", image: "images/queenofswords.png" },
+      kingofswords: { name: "Король Мечей", image: "images/kingofswords.png" }
+    };
+
+    const allTarotCards = Object.entries(Celtic_Cross).map(([id, data]) => ({
+      id,
+      ...data
+    }));
+
+    // Fisher–Yates shuffle
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
     function generateRandomCards() {
-      if (typeof allTarotCards === 'undefined' || !Array.isArray(allTarotCards)) {
-        alert('❌ Ошибка: массив карт не загружен. Убедитесь, что файл const.js подключён и содержит allTarotCards.');
+      if (!Array.isArray(allTarotCards) || allTarotCards.length < 3) {
+        alert('❌ Недостаточно карт.');
         return;
       }
 
-      const count = 3;
-      const shuffled = [...allTarotCards].sort(() => 0.5 - Math.random());
-      const selected = shuffled.slice(0, count);
+      const shuffled = shuffleArray(allTarotCards);
+      const selected = shuffled.slice(0, 3);
 
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = '';
@@ -117,11 +215,22 @@
       });
 
       resultDiv.style.opacity = '0';
+      resultDiv.style.transition = 'opacity 0.6s ease';
       setTimeout(() => {
-        resultDiv.style.transition = 'opacity 0.6s ease';
         resultDiv.style.opacity = '1';
       }, 50);
     }
+
+    // Обработка нажатия кнопки
+    const drawButton = document.getElementById('drawButton');
+    drawButton.addEventListener('click', generateRandomCards);
+
+    // Активация по клавише Enter (глобально)
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        generateRandomCards();
+      }
+    });
   </script>
 </body>
 </html>
