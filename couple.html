@@ -113,6 +113,16 @@
       padding: 10px !important;
       margin: 6px !important;
     }
+      /* Для couple.html — карточки друг под другом на мобилке */
+#result > div[style*="display: flex"]:not(.layout-container) {
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 20px !important;
+}
+#result .card-container {
+  width: 80% !important;
+  max-width: 300px !important;
+}
   }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400&display=swap" rel="stylesheet">

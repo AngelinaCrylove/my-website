@@ -43,14 +43,4 @@
     font-size: 1.35rem !important;
     line-height: 1.4 !important;
   }
-  /* Для couple.html — карточки друг под другом на мобилке */
-#result > div[style*="display: flex"]:not(.layout-container) {
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 20px !important;
-}
-#result .card-container {
-  width: 80% !important;
-  max-width: 300px !important;
-}
 }

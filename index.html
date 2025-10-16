@@ -116,6 +116,14 @@ h2 {
      transform: translateY(-3px);
      box-shadow: 0 5px 15px rgba(212, 160, 23, 0.4);
     }
+
+      .btn-random { background: #4a7d63; } /* зелёный в тон вашего дизайна */
+  .btn-random:hover {
+    background: #3a604d;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(74, 125, 99, 0.4);
+  }
+
     /* Эмодзи только на десктопе (≥481px) */
 @media (min-width: 481px) {
   .btn-single::before,
@@ -126,11 +134,14 @@ h2 {
   .btn-mirror::after { content: "🌊"; }
   .btn-cross::before,
   .btn-cross::after { content: "📜"; }
+  .btn-random::before,
+  .btn-random::after { content: "🍀"; } 
 
   .btn-single::before, .btn-single::after,
   .btn-couple::before, .btn-couple::after,
   .btn-mirror::before, .btn-mirror::after,
-  .btn-cross::before, .btn-cross::after {
+  .btn-cross::before, .btn-cross::after 
+  .btn-random::before, .btn-random::after {
     margin: 0 8px;
   }
 }

@@ -83,16 +83,17 @@
   <button class="btn-base" onclick="generateRandomCards()">Раскрыть карты</button>
   <div id="result" class="cards-container"></div>
 
+  <!-- Правильное подключение JS-файла -->
   <script src="const.js"></script>
   <script>
     function generateRandomCards() {
-      if (!window.Celtic_Cross || !Array.isArray(Celtic_Cross)) {
-        alert('Ошибка: массив Celtic_Cross не загружен.');
+      if (typeof allTarotCards === 'undefined' || !Array.isArray(allTarotCards)) {
+        alert('❌ Ошибка: массив карт не загружен. Убедитесь, что файл const.js подключён и содержит allTarotCards.');
         return;
       }
 
-      const count = Math.floor(Math.random() * 3) + 1; // 1, 2 или 3
-      const shuffled = [...Celtic_Cross].sort(() => 0.5 - Math.random());
+      const count = 3;
+      const shuffled = [...allTarotCards].sort(() => 0.5 - Math.random());
       const selected = shuffled.slice(0, count);
 
       const resultDiv = document.getElementById('result');
@@ -103,8 +104,9 @@
         cardEl.className = 'card-item';
 
         const img = document.createElement('img');
-        img.src = card.image || 'placeholder.jpg'; // убедитесь, что в объекте есть поле image
+        img.src = card.image || 'images/placeholder.png';
         img.alt = card.name || 'Карта';
+        img.onerror = () => img.src = 'images/placeholder.png';
 
         const name = document.createElement('p');
         name.textContent = card.name || 'Неизвестная карта';
@@ -113,6 +115,12 @@
         cardEl.appendChild(name);
         resultDiv.appendChild(cardEl);
       });
+
+      resultDiv.style.opacity = '0';
+      setTimeout(() => {
+        resultDiv.style.transition = 'opacity 0.6s ease';
+        resultDiv.style.opacity = '1';
+      }, 50);
     }
   </script>
 </body>
